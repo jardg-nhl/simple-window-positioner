@@ -1,0 +1,16 @@
+{
+  "simple_positioner": "Simple Positioner",
+  "tab_rules": "Tab Rules",
+  "new_rule": "New Rule",
+  "create_new_tab_rule": "Create new tab rule",
+  "check_monitor": "Check monitor",
+  "get_monitor_configures": "Get monitor configures",
+  "active": "Active",
+  "name": "Name",
+  "url": "Url",
+  "monitor": "Monitor",
+  "position": "Postion",
+  "action": "Action",
+  "edit_rule": "Edit Rule",
+  "delete_rule": "Delete Rule"
+}

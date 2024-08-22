@@ -1,0 +1,32 @@
+{
+  "name": "Simple Positioner",
+  "version": "1.0.69",
+  "description": "Extension for setting window positions",
+  "manifest_version": 3,
+  "icons": {
+    "16": "assets/icons/organize_32.png",
+    "32": "assets/icons/organize_32.png",
+    "48": "assets/icons/organize_64.png",
+    "128": "assets/icons/organize_128.png"
+  },
+  "permissions": [
+      "activeTab",
+      "webNavigation",
+      "storage",
+      "scripting",
+      "tabs",
+      "system.display"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "index.html",
+    "open_in_tab": true
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  }
+}

@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  font-family: "Noto Sans", "Noto Sans";
+}
+
+@font-face {
+  font-family: "Noto Sans JP";
+  src: url("assets/fonts/Noto_Sans_JP/NotoSansJP-VariableFont_wght.ttf") format("truetype");
+  -webkit-font-smoothing: [ auto];
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  src: url("assets/fonts/Noto_Sans/NotoSans-VariableFont_wdth,wght.ttf") format("truetype");
+  -webkit-font-smoothing: [ auto];
+}
+
+.tab-rules-table {
+  display: block;
+  width: 100%;
+}

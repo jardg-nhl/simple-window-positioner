@@ -1,0 +1,219 @@
+<div class="main flex justify-content-center">
+  <p-toast></p-toast>
+  <div class="container w-8 align-items-center flex-column flex">
+    <h1 class="application-title justify-content-center flex">{{ 'simple_positioner' | translate }}</h1>
+    <div class="flex align-items-center flex-column pt-5 w-8">
+      <div class="table-container w-full">
+        <div class="toolbar flex justify-content-between">
+          <h3>{{ 'tab_rules' | translate }}</h3>
+          <div class="button-container">
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="{{ 'new_rule' | translate }}"
+              class="p-button-rounded p-button-success"
+              pTooltip="{{ 'create_new_tab_rule' | translate }}"
+              tooltipPosition="top"
+              (click)="openNew()"
+            ></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="{{'check_monitor' | translate }}"
+              class="p-button-rounded p-button-info"
+              pTooltip="{{ 'get_monitor_configures' | translate }}"
+              tooltipPosition="top"
+              (click)="checkMonitors()"
+            ></button>
+          </div>
+        </div>
+        <p-table
+          #dt
+          [value]="tabOptions"
+          [rowHover]="true"
+          dataKey="id"
+          class="tab-rules-table"
+          *ngIf="tabOptions && tabOptions.length !== 0"
+        >
+          <ng-template pTemplate="header">
+            <tr class="headers">
+              <th>{{ 'active' | translate }}</th>
+              <th>{{ 'name' | translate }}</th>
+              <th>{{ 'url' | translate }}</th>
+              <th>{{ 'monitor' | translate }}</th>
+              <th>{{ 'position' | translate }}</th>
+              <th>{{ 'action' | translate }}</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-tabOption>
+            <tr>
+              <td>
+                <p-checkbox
+                  class="ml-2"
+                  [(ngModel)]="tabOption.active"
+                  [value]="tabOption.active"
+                  [binary]="true"
+                  [disabled]="true"
+                ></p-checkbox>
+              </td>
+              <td>{{ tabOption.name }}</td>
+              <td>{{ tabOption.url }}</td>
+              <td>{{ tabOption.monitor?.name }}</td>
+              <td>{{ tabOption.positionType }}</td>
+              <td class="actions">
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-success mr-2"
+                  pTooltip="{{ 'edit_rule' | translate }}"
+                  tooltipPosition="top"
+                  (click)="editTabOption(tabOption)"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"
+                  pTooltip="{{ 'delete_rule' | translate }}"
+                  tooltipPosition="top"
+                  (click)="deleteTabOption(tabOption)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <div
+          class="no-tabs-options p-5"
+          *ngIf="!tabOptions || tabOptions.length === 0"
+        >
+          {{ "unavailable_tab_option" }}
+        </div>
+      </div>
+    </div>
+
+    <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="showEditOptionDialog"
+  [style]="{ width: '450px' }"
+  header="Option Details"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <div class="field grid">
+      <label for="name">Active</label>
+      <p-checkbox
+        class="ml-2"
+        [(ngModel)]="tabOption.active"
+        [value]="tabOption.active"
+        [binary]="true"
+      ></p-checkbox>
+    </div>
+    <div class="field">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="tabOption.name"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !tabOption.name"
+        >Name is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="url">Url</label>
+      <input
+        type="text"
+        pInputText
+        id="url"
+        [(ngModel)]="tabOption.url"
+        required
+      />
+      <small class="p-error" *ngIf="submitted && !tabOption.url"
+        >Url is required.</small
+      >
+    </div>
+
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="left">Monitor:</label>
+        <p-dropdown
+          [options]="monitorOptions"
+          [(ngModel)]="selectedMonitor"
+          (ngModelChange)="onChangeMonitor($event)"
+        ></p-dropdown>
+      </div>
+    </div>
+
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="left">Position:</label>
+        <p-dropdown
+          [options]="positionOptions"
+          [(ngModel)]="selectedPositionType"
+          (ngModelChange)="onChangePositionType($event)"
+        ></p-dropdown>
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="left">Left</label>
+        <p-inputNumber
+          id="x"
+          [(ngModel)]="tabOption.position.left"
+        ></p-inputNumber>
+      </div>
+      <div class="field col">
+        <label for="top">Top</label>
+        <p-inputNumber
+          id="y"
+          [(ngModel)]="tabOption.position.top"
+        ></p-inputNumber>
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="width">Width</label>
+        <p-inputNumber
+          id="x"
+          [(ngModel)]="tabOption.position.width"
+        ></p-inputNumber>
+      </div>
+      <div class="field col">
+        <label for="quantity">Height</label>
+        <p-inputNumber
+          id="height"
+          [(ngModel)]="tabOption.position.height"
+        ></p-inputNumber>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Cancel"
+      class="p-button-rounded p-button-secondary"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Save"
+      class="p-button-rounded p-button-success"
+      (click)="saveOptions()"
+    ></button>
+  </ng-template>
+</p-dialog>
